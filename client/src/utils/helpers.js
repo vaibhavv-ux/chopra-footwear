@@ -10,7 +10,7 @@ export const formatPrice = (price) => {
 export const getImageUrl = (url) => {
   if (!url) return 'https://picsum.photos/seed/placeholder/400/400';
   if (url.startsWith('http')) return url;
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = import.meta.env.VITE_API_URL || '';
   return `${API_URL}${url}`;
 };
 

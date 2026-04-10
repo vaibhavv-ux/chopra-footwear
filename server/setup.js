@@ -7,22 +7,87 @@ async function setup() {
   console.log('🔧 Initializing database and synchronizing data...');
 
   try {
-      // 1. Sync Images (Copy from project folder to persistent storage on Render)
-      const localUploads = path.join(__dirname, 'uploads');
-      if (fs.existsSync(localUploads) && localUploads !== uploadsPath) {
-          console.log('🔄 Syncing local images to persistent storage...');
-          const files = fs.readdirSync(localUploads);
-          for (const file of files) {
-              const src = path.join(localUploads, file);
-              const dest = path.join(uploadsPath, file);
-              if (!fs.existsSync(dest)) {
-                  fs.copyFileSync(src, dest);
-              }
-          }
-          console.log(`✅ Synced ${files.length} images.`);
-      }
+    // 1. Ensure tables exist (especially important for first run on Render persistent disk)
+    console.log('🔄 Ensuring tables exist...');
+    const tables = [
+      `CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        password_hash TEXT NOT NULL,
+        role TEXT DEFAULT 'user',
+        phone TEXT,
+        address TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`,
+      `CREATE TABLE IF NOT EXISTS categories (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        slug TEXT NOT NULL UNIQUE,
+        description TEXT,
+        image_url TEXT
+      )`,
+      `CREATE TABLE IF NOT EXISTS products (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        description TEXT,
+        price REAL NOT NULL,
+        discount_price REAL,
+        category_id INTEGER,
+        brand TEXT,
+        stock_qty INTEGER DEFAULT 0,
+        is_featured INTEGER DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+      )`,
+      `CREATE TABLE IF NOT EXISTS product_images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_id INTEGER NOT NULL,
+        image_url TEXT NOT NULL,
+        is_primary INTEGER DEFAULT 0,
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+      )`,
+      `CREATE TABLE IF NOT EXISTS product_sizes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_id INTEGER NOT NULL,
+        size TEXT NOT NULL,
+        stock_qty INTEGER DEFAULT 0,
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+      )`,
+      `CREATE TABLE IF NOT EXISTS coupons (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        code TEXT NOT NULL UNIQUE,
+        discount_type TEXT NOT NULL,
+        value REAL NOT NULL,
+        min_order REAL DEFAULT 0,
+        max_uses INTEGER DEFAULT 0,
+        used_count INTEGER DEFAULT 0,
+        expiry_date TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`
+    ];
 
-    // 2. Check if we already have data
+    for (const sql of tables) {
+      await db.query(sql);
+    }
+    console.log('✅ Tables verified.');
+
+    // 2. Sync Images (Copy from project folder to persistent storage on Render)
+    const localUploads = path.join(__dirname, 'uploads');
+    if (fs.existsSync(localUploads) && localUploads !== uploadsPath) {
+        console.log('🔄 Syncing local images to persistent storage...');
+        const files = fs.readdirSync(localUploads);
+        for (const file of files) {
+            const src = path.join(localUploads, file);
+            const dest = path.join(uploadsPath, file);
+            if (!fs.existsSync(dest)) {
+                fs.copyFileSync(src, dest);
+            }
+        }
+        console.log(`✅ Synced ${files.length} images.`);
+    }
+
+    // 3. Check if we already have data
     const [rows] = await db.query('SELECT COUNT(*) as c FROM users');
     if (rows && rows[0] && rows[0].c > 0) {
       console.log(`✅ Database already contains ${rows[0].c} users. Skipping data import.`);
