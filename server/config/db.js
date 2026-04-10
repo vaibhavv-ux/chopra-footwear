@@ -1,55 +1,42 @@
-const { MongoClient } = require('mongodb');
+const Database = require('better-sqlite3');
+const { dbPath } = require('./storage');
 
-// MongoDB connection
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/chopra-footwear';
-const client = new MongoClient(uri, {
-  maxPoolSize: 10,
-  minPoolSize: 2,
-  maxIdleTimeMS: 30000,
-  serverSelectionTimeoutMS: 10000, // Timeout after 10s instead of 30s
-  socketTimeoutMS: 45000,
-  connectTimeoutMS: 10000,
-});
+console.log('🔄 Connecting to SQLite database at:', dbPath);
 
-let db;
+const sqlite = new Database(dbPath, { verbose: console.log });
+sqlite.pragma('journal_mode = WAL');
 
-async function connectDB() {
-  try {
-    if (db) {
-      console.log('✅ MongoDB already connected');
-      return db;
+// Wrapper for controllers that expect promise-based MySQL-style query result
+const db = {
+  query: async (sql, params = []) => {
+    try {
+      // Normalize single value params to array
+      const normalizedParams = Array.isArray(params) ? params : [params];
+      
+      const stmt = sqlite.prepare(sql);
+      
+      // Check if it's a SELECT query
+      const isSelect = sql.trim().toUpperCase().startsWith('SELECT') || 
+                       sql.trim().toUpperCase().startsWith('WITH');
+
+      if (isSelect) {
+        const rows = stmt.all(...normalizedParams);
+        return [rows];
+      } else {
+        const result = stmt.run(...normalizedParams);
+        return [{
+          insertId: result.lastInsertRowid,
+          affectedRows: result.changes
+        }];
+      }
+    } catch (error) {
+      console.error('Database Query Error:', error.message);
+      console.error('SQL:', sql);
+      throw error;
     }
-
-    console.log('🔄 Connecting to MongoDB...');
-    await client.connect();
-    db = client.db('chopra-footwear');
-    console.log('✅ MongoDB connected successfully');
-    return db;
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error.message);
-    console.error('Connection URI exists:', !!process.env.MONGODB_URI);
-    throw new Error(`Database connection failed: ${error.message}`);
-  }
-}
-
-// Get database instance
-const getDB = () => {
-  if (!db) {
-    throw new Error('Database not connected. Call connectDB() first.');
-  }
-  return db;
+  },
+  // Add direct access to sqlite if needed
+  sqlite: sqlite
 };
-
-module.exports = {
-  connectDB,
-  getDB,
-  client
-};
-    };
-  }
-};
-
-console.log('✅ SQLite database connected at:', dbPath);
 
 module.exports = db;
-module.exports.sqlite = sqlite;

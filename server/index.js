@@ -5,9 +5,11 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 require('dotenv').config();
 
-// Connect to MongoDB and setup database
-const { connectDB } = require('./config/db');
+// Connect to Database and setup
+const db = require('./config/db');
 const setup = require('./setup');
+
+const { uploadsPath } = require('./config/storage');
 
 async function startServer() {
   const app = express();
@@ -23,7 +25,7 @@ async function startServer() {
   app.use(cookieParser());
 
   // Static files
-  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  app.use('/uploads', express.static(uploadsPath));
 
   // Health check (works even if DB is down)
   app.get('/api/health', (req, res) => {
@@ -75,19 +77,15 @@ async function startServer() {
 
 async function connectToDatabase() {
   try {
-    console.log('🔄 Attempting to connect to MongoDB...');
-    await connectDB();
+    console.log('🔄 Initializing database...');
+    // In SQLite, the connection is already established on require.
+    // We just need to run the setup to ensure tables exist.
     await setup();
-    console.log('✅ Database connected and seeded successfully');
-
-    // Update health check to reflect DB status
-    // Note: This is a simple approach - in production you might want to use a more sophisticated health check
+    console.log('✅ Database ready and listings restored');
   } catch (error) {
-    console.error('❌ Database connection failed, but server will continue:', error.message);
-    console.log('🔄 Will retry database connection in 30 seconds...');
-
-    // Retry connection after 30 seconds
-    setTimeout(connectToDatabase, 30000);
+    console.error('❌ Database initialization failed:', error.message);
+    // Exit if database setup fails critically
+    process.exit(1);
   }
 }
 

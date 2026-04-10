@@ -14,8 +14,8 @@ services:
         generateValue: true
       - key: CLIENT_URL
         value: https://chopra-footwear.vercel.app
-      - key: MONGODB_URI
-        value: mongodb+srv://vaibhav:vaibhav123@cluster0.mongodb.net/chopra-footwear?retryWrites=true&w=majority
+      - key: PERSISTENT_STORAGE_PATH
+        value: /var/data
     disk:
       name: data
       mountPath: /var/data

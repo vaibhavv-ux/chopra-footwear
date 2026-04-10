@@ -1,0 +1,663 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Summer Vibe",
+      "slug": "summer-vibe",
+      "description": "Trendy and comfortable sneakers for everyday wear.",
+      "image_url": "https://i.pinimg.com/736x/be/5d/4d/be5d4df91d2e35062a0012f9a765eb42.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Casuals",
+      "slug": "casuals",
+      "description": "Elegant formal footwear for professional occasions.",
+      "image_url": "https://i.pinimg.com/1200x/51/63/0c/51630cd66422112305724df7990a5912.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Formals",
+      "slug": "formals",
+      "description": "Where luxury meets every step.",
+      "image_url": "https://i.pinimg.com/736x/59/05/8f/59058f7ef0afa858ed6a88ce00a8b169.jpg"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Lazer",
+      "description": "Stylish and comfortable printed flip-flops designed for everyday wear. Made with a lightweight cushioned sole, durable straps, and anti-slip grip for maximum comfort and support. Perfect for casual outings, home, beach, and daily use.",
+      "price": 399,
+      "discount_price": 268,
+      "category_id": 2,
+      "brand": "Aridos onn",
+      "stock_qty": 40,
+      "is_featured": 1,
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 2,
+      "name": "Maxx",
+      "description": "Trendy striped flip-flops crafted for comfort and daily wear. Features a lightweight cushioned sole, durable straps, and anti-slip grip for all-day ease. Ideal for casual outings, beach, and everyday use.",
+      "price": 569,
+      "discount_price": 389,
+      "category_id": 1,
+      "brand": "Aridos onn",
+      "stock_qty": 35,
+      "is_featured": 1,
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 3,
+      "name": "Health Orthocare",
+      "description": "Designed for comfort and foot relaxation, these orthocare flip-flops feature a textured acupressure-style footbed for enhanced grip and massage-like support. Lightweight, durable, and ideal for daily wear, home use, and all-day comfort.",
+      "price": 459,
+      "discount_price": 238,
+      "category_id": 1,
+      "brand": "Aridos onn",
+      "stock_qty": 80,
+      "is_featured": 1,
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 4,
+      "name": "Monarch",
+      "description": "Formal shoes designed for a polished and sophisticated look. Crafted with a premium finish, cushioned comfort, and durable sole for long-lasting wear. Perfect for office, business meetings, and formal occasions.",
+      "price": 3299,
+      "discount_price": 2799,
+      "category_id": 5,
+      "brand": "Aridos onn",
+      "stock_qty": 24,
+      "is_featured": 1,
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 5,
+      "name": "Sandvich",
+      "description": "Comfortable and stylish blue flip-flops with a lightweight sole, durable straps, and trendy printed design. Perfect for daily wear, casual outings, and all-day comfort.",
+      "price": 299,
+      "discount_price": 219,
+      "category_id": 1,
+      "brand": "Aridos onn",
+      "stock_qty": 20,
+      "is_featured": 1,
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 6,
+      "name": "Kick",
+      "description": "Designed for everyday comfort and a bold, modern look. Lightweight, durable, and easy to slip on, they’re perfect for casual outings, lounging, or quick errands. The contrasting color design adds a trendy edge while ensuring all-day ease for your feet.",
+      "price": 699,
+      "discount_price": 439,
+      "category_id": 2,
+      "brand": "Aridos onn",
+      "stock_qty": 30,
+      "is_featured": 1,
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 8,
+      "name": "Retro",
+      "description": "Comfortable and stylish flip-flops with a lightweight sole, durable straps, and trendy printed design. Perfect for daily wear, casual outings, and all-day comfort.",
+      "price": 799,
+      "discount_price": 467,
+      "category_id": 2,
+      "brand": "Aridos onn",
+      "stock_qty": 35,
+      "is_featured": 1,
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 9,
+      "name": "Royale",
+      "description": " The solid pattern complements a range of outfits, making them an essential option for the discerning gentleman. With a sleek silhouette that enhances every step.",
+      "price": 5299,
+      "discount_price": 3299,
+      "category_id": 5,
+      "brand": "Aridos onn",
+      "stock_qty": -5,
+      "is_featured": 1,
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 10,
+      "name": "Luxe",
+      "description": "Constructed from premium leather with a textured finish, they offer an exquisite touch of refinement to your ensemble. The TPR sole ensures durability while providing superior grip and stability. Embrace effortless sophistication as you step confidently into any event, turning heads effortlessly.",
+      "price": 6999,
+      "discount_price": 4399,
+      "category_id": 5,
+      "brand": "Aridos onn",
+      "stock_qty": 28,
+      "is_featured": 1,
+      "created_at": "2026-04-07 20:26:53"
+    }
+  ],
+  "product_images": [
+    {
+      "id": 39,
+      "product_id": 1,
+      "image_url": "/uploads/1775730257245-655858539.jpeg",
+      "is_primary": 1
+    },
+    {
+      "id": 40,
+      "product_id": 1,
+      "image_url": "/uploads/1775730311861-225359389.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 41,
+      "product_id": 1,
+      "image_url": "/uploads/1775730311862-572234159.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 42,
+      "product_id": 1,
+      "image_url": "/uploads/1775730311864-250903120.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 43,
+      "product_id": 2,
+      "image_url": "/uploads/1775736033658-390659417.jpeg",
+      "is_primary": 1
+    },
+    {
+      "id": 44,
+      "product_id": 2,
+      "image_url": "/uploads/1775736033661-916812993.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 45,
+      "product_id": 2,
+      "image_url": "/uploads/1775736033664-19815510.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 46,
+      "product_id": 2,
+      "image_url": "/uploads/1775736033666-543476986.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 47,
+      "product_id": 3,
+      "image_url": "/uploads/1775736633190-188572376.jpeg",
+      "is_primary": 1
+    },
+    {
+      "id": 48,
+      "product_id": 3,
+      "image_url": "/uploads/1775736633198-523565798.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 49,
+      "product_id": 3,
+      "image_url": "/uploads/1775736633199-830244706.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 50,
+      "product_id": 4,
+      "image_url": "/uploads/1775737016241-146665986.jpeg",
+      "is_primary": 1
+    },
+    {
+      "id": 51,
+      "product_id": 4,
+      "image_url": "/uploads/1775737016242-463793937.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 52,
+      "product_id": 4,
+      "image_url": "/uploads/1775737016245-512741663.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 53,
+      "product_id": 5,
+      "image_url": "/uploads/1775737565086-56752203.jpeg",
+      "is_primary": 1
+    },
+    {
+      "id": 54,
+      "product_id": 5,
+      "image_url": "/uploads/1775737565087-994602138.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 55,
+      "product_id": 5,
+      "image_url": "/uploads/1775737565088-33717629.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 56,
+      "product_id": 5,
+      "image_url": "/uploads/1775737578492-559170183.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 57,
+      "product_id": 5,
+      "image_url": "/uploads/1775737578492-868461174.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 58,
+      "product_id": 5,
+      "image_url": "/uploads/1775737578495-253108271.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 59,
+      "product_id": 6,
+      "image_url": "/uploads/1775738376714-943449907.jpeg",
+      "is_primary": 1
+    },
+    {
+      "id": 60,
+      "product_id": 6,
+      "image_url": "/uploads/1775738376725-335787403.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 61,
+      "product_id": 6,
+      "image_url": "/uploads/1775738376731-516843334.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 62,
+      "product_id": 6,
+      "image_url": "/uploads/1775738402983-122300721.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 66,
+      "product_id": 8,
+      "image_url": "/uploads/1775742448564-990361435.jpeg",
+      "is_primary": 1
+    },
+    {
+      "id": 67,
+      "product_id": 8,
+      "image_url": "/uploads/1775742448564-188212039.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 68,
+      "product_id": 8,
+      "image_url": "/uploads/1775742448565-60474725.jpeg",
+      "is_primary": 0
+    },
+    {
+      "id": 69,
+      "product_id": 9,
+      "image_url": "/uploads/1775800664218-254088419.png",
+      "is_primary": 1
+    },
+    {
+      "id": 70,
+      "product_id": 9,
+      "image_url": "/uploads/1775800664227-289158402.png",
+      "is_primary": 0
+    },
+    {
+      "id": 71,
+      "product_id": 9,
+      "image_url": "/uploads/1775800664227-358728208.png",
+      "is_primary": 0
+    },
+    {
+      "id": 72,
+      "product_id": 10,
+      "image_url": "/uploads/1775800861995-22717724.png",
+      "is_primary": 1
+    },
+    {
+      "id": 73,
+      "product_id": 10,
+      "image_url": "/uploads/1775800861995-76178944.png",
+      "is_primary": 0
+    },
+    {
+      "id": 74,
+      "product_id": 10,
+      "image_url": "/uploads/1775800861996-538102701.png",
+      "is_primary": 0
+    }
+  ],
+  "product_sizes": [
+    {
+      "id": 121,
+      "product_id": 3,
+      "size": "6",
+      "stock_qty": 14
+    },
+    {
+      "id": 122,
+      "product_id": 3,
+      "size": "7",
+      "stock_qty": 14
+    },
+    {
+      "id": 123,
+      "product_id": 3,
+      "size": "8",
+      "stock_qty": 14
+    },
+    {
+      "id": 124,
+      "product_id": 3,
+      "size": "9",
+      "stock_qty": 12
+    },
+    {
+      "id": 125,
+      "product_id": 3,
+      "size": "10",
+      "stock_qty": 6
+    },
+    {
+      "id": 166,
+      "product_id": 5,
+      "size": "6",
+      "stock_qty": 13
+    },
+    {
+      "id": 167,
+      "product_id": 5,
+      "size": "7",
+      "stock_qty": 6
+    },
+    {
+      "id": 168,
+      "product_id": 5,
+      "size": "8",
+      "stock_qty": 11
+    },
+    {
+      "id": 169,
+      "product_id": 5,
+      "size": "9",
+      "stock_qty": 17
+    },
+    {
+      "id": 170,
+      "product_id": 5,
+      "size": "10",
+      "stock_qty": 11
+    },
+    {
+      "id": 226,
+      "product_id": 6,
+      "size": "6",
+      "stock_qty": 7
+    },
+    {
+      "id": 227,
+      "product_id": 6,
+      "size": "7",
+      "stock_qty": 10
+    },
+    {
+      "id": 228,
+      "product_id": 6,
+      "size": "8",
+      "stock_qty": 15
+    },
+    {
+      "id": 229,
+      "product_id": 6,
+      "size": "9",
+      "stock_qty": 13
+    },
+    {
+      "id": 230,
+      "product_id": 6,
+      "size": "10",
+      "stock_qty": 4
+    },
+    {
+      "id": 231,
+      "product_id": 8,
+      "size": "6",
+      "stock_qty": 5
+    },
+    {
+      "id": 232,
+      "product_id": 8,
+      "size": "7",
+      "stock_qty": 7
+    },
+    {
+      "id": 233,
+      "product_id": 8,
+      "size": "8",
+      "stock_qty": 3
+    },
+    {
+      "id": 234,
+      "product_id": 8,
+      "size": "9",
+      "stock_qty": 6
+    },
+    {
+      "id": 235,
+      "product_id": 8,
+      "size": "10",
+      "stock_qty": 0
+    },
+    {
+      "id": 241,
+      "product_id": 2,
+      "size": "6",
+      "stock_qty": 10
+    },
+    {
+      "id": 242,
+      "product_id": 2,
+      "size": "7",
+      "stock_qty": 12
+    },
+    {
+      "id": 243,
+      "product_id": 2,
+      "size": "8",
+      "stock_qty": 3
+    },
+    {
+      "id": 244,
+      "product_id": 2,
+      "size": "9",
+      "stock_qty": 17
+    },
+    {
+      "id": 245,
+      "product_id": 2,
+      "size": "10",
+      "stock_qty": 15
+    },
+    {
+      "id": 246,
+      "product_id": 4,
+      "size": "6",
+      "stock_qty": 8
+    },
+    {
+      "id": 247,
+      "product_id": 4,
+      "size": "7",
+      "stock_qty": 3
+    },
+    {
+      "id": 248,
+      "product_id": 4,
+      "size": "8",
+      "stock_qty": 16
+    },
+    {
+      "id": 249,
+      "product_id": 4,
+      "size": "9",
+      "stock_qty": 11
+    },
+    {
+      "id": 250,
+      "product_id": 4,
+      "size": "10",
+      "stock_qty": 9
+    },
+    {
+      "id": 256,
+      "product_id": 10,
+      "size": "6",
+      "stock_qty": 9
+    },
+    {
+      "id": 257,
+      "product_id": 10,
+      "size": "7",
+      "stock_qty": 3
+    },
+    {
+      "id": 258,
+      "product_id": 10,
+      "size": "8",
+      "stock_qty": 14
+    },
+    {
+      "id": 259,
+      "product_id": 10,
+      "size": "9",
+      "stock_qty": 9
+    },
+    {
+      "id": 260,
+      "product_id": 10,
+      "size": "10",
+      "stock_qty": 6
+    },
+    {
+      "id": 261,
+      "product_id": 9,
+      "size": "6",
+      "stock_qty": 10
+    },
+    {
+      "id": 262,
+      "product_id": 9,
+      "size": "7",
+      "stock_qty": 8
+    },
+    {
+      "id": 263,
+      "product_id": 9,
+      "size": "8",
+      "stock_qty": -6
+    },
+    {
+      "id": 264,
+      "product_id": 9,
+      "size": "9",
+      "stock_qty": 14
+    },
+    {
+      "id": 265,
+      "product_id": 9,
+      "size": "10",
+      "stock_qty": 6
+    },
+    {
+      "id": 266,
+      "product_id": 1,
+      "size": "6",
+      "stock_qty": 5
+    },
+    {
+      "id": 267,
+      "product_id": 1,
+      "size": "7",
+      "stock_qty": 15
+    },
+    {
+      "id": 268,
+      "product_id": 1,
+      "size": "8",
+      "stock_qty": 13
+    },
+    {
+      "id": 269,
+      "product_id": 1,
+      "size": "9",
+      "stock_qty": 5
+    },
+    {
+      "id": 270,
+      "product_id": 1,
+      "size": "10",
+      "stock_qty": -2
+    }
+  ],
+  "coupons": [
+    {
+      "id": 2,
+      "code": "FLAT500",
+      "discount_type": "flat",
+      "value": 500,
+      "min_order": 3000,
+      "max_uses": 50,
+      "used_count": 0,
+      "expiry_date": "2027-06-30",
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 3,
+      "code": "CHOPRA20",
+      "discount_type": "percent",
+      "value": 20,
+      "min_order": 5000,
+      "max_uses": 30,
+      "used_count": 0,
+      "expiry_date": "2027-03-31",
+      "created_at": "2026-04-07 20:26:53"
+    },
+    {
+      "id": 4,
+      "code": "WELCOME20",
+      "discount_type": "percent",
+      "value": 20,
+      "min_order": 799,
+      "max_uses": 1,
+      "used_count": 1,
+      "expiry_date": "2029-05-16",
+      "created_at": "2026-04-10 05:49:24"
+    },
+    {
+      "id": 5,
+      "code": "AKSHIT50",
+      "discount_type": "percent",
+      "value": 50,
+      "min_order": 10000,
+      "max_uses": 0,
+      "used_count": 1,
+      "expiry_date": "2026-10-10",
+      "created_at": "2026-04-10 07:31:43"
+    }
+  ],
+  "users": [
+    {
+      "name": "Vaibhav",
+      "email": "admin@chopra.com",
+      "password_hash": "$2a$12$ZaHIZHYggmNLP5gIYz4KvOFKcpzuyAwIsH6cFocwxA0f3Fyazd6.G",
+      "role": "admin",
+      "phone": "6280415033",
+      "address": "Jalandhar, India"
+    }
+  ]
+}
