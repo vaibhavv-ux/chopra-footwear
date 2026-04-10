@@ -5,6 +5,10 @@ const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/chopra-footwea
 const client = new MongoClient(uri, {
   maxPoolSize: 10,
   minPoolSize: 2,
+  maxIdleTimeMS: 30000,
+  serverSelectionTimeoutMS: 10000, // Timeout after 10s instead of 30s
+  socketTimeoutMS: 45000,
+  connectTimeoutMS: 10000,
 });
 
 let db;
@@ -15,14 +19,16 @@ async function connectDB() {
       console.log('✅ MongoDB already connected');
       return db;
     }
-    
+
+    console.log('🔄 Connecting to MongoDB...');
     await client.connect();
     db = client.db('chopra-footwear');
     console.log('✅ MongoDB connected successfully');
     return db;
   } catch (error) {
     console.error('❌ MongoDB connection error:', error.message);
-    throw error;
+    console.error('Connection URI exists:', !!process.env.MONGODB_URI);
+    throw new Error(`Database connection failed: ${error.message}`);
   }
 }
 
