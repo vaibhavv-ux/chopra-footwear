@@ -5,7 +5,7 @@ const { getDB } = require('../config/db');
 const generateToken = (user) => {
   return jwt.sign(
     { id: user._id.toString(), email: user.email, role: user.role },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET || 'fallback-secret-key-change-in-production',
     { expiresIn: '7d' }
   );
 };
@@ -17,8 +17,22 @@ const cookieOptions = {
   maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
 };
 
+// Helper function to check database connection
+const checkDatabaseConnection = () => {
+  try {
+    getDB();
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 exports.register = async (req, res) => {
   try {
+    if (!checkDatabaseConnection()) {
+      return res.status(503).json({ message: 'Database not available. Please try again later.' });
+    }
+
     const { name, email, password, phone, address } = req.body;
     const db = getDB();
 
@@ -54,6 +68,10 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    if (!checkDatabaseConnection()) {
+      return res.status(503).json({ message: 'Database not available. Please try again later.' });
+    }
+
     const { email, password } = req.body;
     const db = getDB();
 
@@ -93,6 +111,10 @@ exports.logout = (req, res) => {
 
 exports.getMe = async (req, res) => {
   try {
+    if (!checkDatabaseConnection()) {
+      return res.status(503).json({ message: 'Database not available. Please try again later.' });
+    }
+
     const db = getDB();
     const user = await db.collection('users').findOne({ _id: require('mongodb').ObjectId(req.user.id) });
     if (!user) {
