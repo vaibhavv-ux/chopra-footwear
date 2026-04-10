@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #1a1a1a;
+    background-color: #ffffff;
+  }
+  
+  ::selection {
+    background-color: #7B1F32;
+    color: white;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #7B1F32;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6b1c2d;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-800 text-white px-6 py-3 rounded-lg font-semibold 
+    hover:bg-primary-900 transition-all duration-300 
+    active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
+    focus:outline-none focus:ring-2 focus:ring-primary-800 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-primary-800 text-primary-800 px-6 py-3 rounded-lg font-semibold
+    hover:bg-primary-800 hover:text-white transition-all duration-300
+    active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary-800 focus:ring-offset-2;
+  }
+  
+  .btn-accent {
+    @apply bg-accent-400 text-dark-900 px-6 py-3 rounded-lg font-semibold
+    hover:bg-accent-500 transition-all duration-300
+    active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border border-dark-200 rounded-lg bg-white
+    focus:outline-none focus:border-primary-800 focus:ring-2 focus:ring-primary-800/20
+    transition-all duration-200 text-dark-900 placeholder:text-dark-400;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-dark-100 
+    hover:shadow-lg transition-all duration-300;
+  }
+  
+  .skeleton {
+    @apply bg-gradient-to-r from-dark-100 via-dark-50 to-dark-100 
+    bg-[length:200%_100%] animate-shimmer rounded;
+  }
+  
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-dark-900;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-800 to-accent-400;
+  }
+  
+  .glass {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.85);
+  }
+}
