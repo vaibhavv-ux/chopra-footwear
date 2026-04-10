@@ -1,53 +1,102 @@
-const { sqlite } = require('./config/db');
+const { connectDB, getDB } = require('./config/db');
 const bcrypt = require('bcryptjs');
 
-function setup() {
-  console.log('🔧 Setting up database...');
+async function setup() {
+  console.log('🔧 Setting up MongoDB database...');
 
-  // Create tables
-  sqlite.exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      email TEXT NOT NULL UNIQUE,
-      password_hash TEXT NOT NULL,
-      role TEXT DEFAULT 'user' CHECK(role IN ('user','admin')),
-      phone TEXT,
-      address TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
+  try {
+    await connectDB();
+    const db = getDB();
 
-    CREATE TABLE IF NOT EXISTS categories (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      slug TEXT NOT NULL UNIQUE,
-      description TEXT,
-      image_url TEXT
-    );
+    // Create collections (MongoDB creates them automatically when first used)
+    console.log('✅ MongoDB collections ready');
 
-    CREATE TABLE IF NOT EXISTS products (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      description TEXT,
-      price REAL NOT NULL,
-      discount_price REAL,
-      category_id INTEGER,
-      brand TEXT,
-      stock_qty INTEGER DEFAULT 0,
-      is_featured INTEGER DEFAULT 0,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
-    );
+    // Check if already seeded
+    const userCount = await db.collection('users').countDocuments();
+    if (userCount > 0) {
+      console.log('✅ Database already seeded, skipping...');
+      return;
+    }
 
-    CREATE TABLE IF NOT EXISTS product_images (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      product_id INTEGER NOT NULL,
-      image_url TEXT NOT NULL,
-      is_primary INTEGER DEFAULT 0,
-      FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
-    );
+    // Seed admin user
+    const adminHash = await bcrypt.hash('Admin@123', 12);
+    await db.collection('users').insertOne({
+      name: 'Admin Chopra',
+      email: 'admin@chopra.com',
+      password_hash: adminHash,
+      role: 'admin',
+      phone: '9876543210',
+      address: '123 Admin Street, New Delhi, India',
+      created_at: new Date()
+    });
+    console.log('✅ Admin user created (admin@chopra.com / Admin@123)');
 
-    CREATE TABLE IF NOT EXISTS product_sizes (
+    // Seed categories
+    const categories = [
+      { name: 'Sneakers', slug: 'sneakers', description: 'Trendy and comfortable sneakers for everyday wear.', image_url: 'https://picsum.photos/seed/sneakers/600/400' },
+      { name: 'Formal', slug: 'formal', description: 'Elegant formal footwear for professional occasions.', image_url: 'https://picsum.photos/seed/formal/600/400' },
+      { name: 'Sports', slug: 'sports', description: 'High-performance sports footwear for athletes.', image_url: 'https://picsum.photos/seed/sports/600/400' }
+    ];
+
+    for (const category of categories) {
+      await db.collection('categories').insertOne({
+        ...category,
+        created_at: new Date()
+      });
+    }
+    console.log('✅ Categories seeded');
+
+    // Get category IDs
+    const sneakersCat = await db.collection('categories').findOne({ slug: 'sneakers' });
+    const formalCat = await db.collection('categories').findOne({ slug: 'formal' });
+    const sportsCat = await db.collection('categories').findOne({ slug: 'sports' });
+
+    // Seed products
+    const products = [
+      { name: 'Urban Stride Classic', description: 'Premium urban sneakers with cushioned insole and breathable mesh upper. Perfect for daily commutes.', price: 3499, discount_price: 2799, category_id: sneakersCat._id, brand: 'Chopra Originals', stock_qty: 50, is_featured: 1, primary_image: 'https://picsum.photos/seed/shoe1a/800/800' },
+      { name: 'Metro Runner Pro', description: 'Lightweight running-inspired sneakers with responsive cushioning and sleek silhouette.', price: 4299, discount_price: 3599, category_id: sneakersCat._id, brand: 'Chopra Sport', stock_qty: 35, is_featured: 1, primary_image: 'https://picsum.photos/seed/shoe2a/800/800' },
+      { name: 'Canvas Wave', description: 'Classic canvas sneakers with a contemporary twist. Reinforced toe cap and padded collar.', price: 1999, discount_price: 1499, category_id: sneakersCat._id, brand: 'Chopra Basics', stock_qty: 80, is_featured: 0, primary_image: 'https://picsum.photos/seed/shoe3a/800/800' },
+      { name: 'Retro Bounce', description: 'Vintage-inspired sneakers with modern comfort technology. Chunky sole with premium suede.', price: 5499, discount_price: 4499, category_id: sneakersCat._id, brand: 'Chopra Premium', stock_qty: 25, is_featured: 1, primary_image: 'https://picsum.photos/seed/shoe4a/800/800' },
+      { name: 'Oxford Elite', description: 'Handcrafted oxford shoes in genuine leather with Goodyear welt construction.', price: 7999, discount_price: 6999, category_id: formalCat._id, brand: 'Chopra Luxe', stock_qty: 20, is_featured: 1, primary_image: 'https://picsum.photos/seed/shoe5a/800/800' },
+      { name: 'Derby Gentleman', description: 'Classic derby shoes with burnished leather finish. Blake-stitched sole.', price: 6499, discount_price: 5499, category_id: formalCat._id, brand: 'Chopra Luxe', stock_qty: 30, is_featured: 0, primary_image: 'https://picsum.photos/seed/shoe6a/800/800' },
+      { name: 'Monk Strap Prestige', description: 'Double monk strap shoes in hand-polished leather. Sophisticated choice.', price: 8499, discount_price: null, category_id: formalCat._id, brand: 'Chopra Luxe', stock_qty: 15, is_featured: 1, primary_image: 'https://picsum.photos/seed/shoe7a/800/800' },
+      { name: 'Loafer Comfort', description: 'Penny loafers in soft napa leather with memory foam insole.', price: 4999, discount_price: 3999, category_id: formalCat._id, brand: 'Chopra Premium', stock_qty: 40, is_featured: 0, primary_image: 'https://picsum.photos/seed/shoe8a/800/800' },
+      { name: 'Sprint Max 360', description: 'Professional running shoes with responsive energy-return midsole.', price: 5999, discount_price: 4999, category_id: sportsCat._id, brand: 'Chopra Sport', stock_qty: 45, is_featured: 1, primary_image: 'https://picsum.photos/seed/shoe9a/800/800' },
+      { name: 'Trail Blazer X', description: 'Rugged trail running shoes with aggressive grip pattern. Waterproof membrane.', price: 6999, discount_price: 5999, category_id: sportsCat._id, brand: 'Chopra Sport', stock_qty: 28, is_featured: 0, primary_image: 'https://picsum.photos/seed/shoe10a/800/800' },
+      { name: 'Gym Force Pro', description: 'Versatile training shoes with flat stable sole for weightlifting and cross-training.', price: 4499, discount_price: 3499, category_id: sportsCat._id, brand: 'Chopra Sport', stock_qty: 55, is_featured: 1, primary_image: 'https://picsum.photos/seed/shoe11a/800/800' },
+      { name: 'Basketball Dunk Elite', description: 'High-top basketball shoes with ankle support and impact-absorbing heel unit.', price: 7499, discount_price: 6499, category_id: sportsCat._id, brand: 'Chopra Sport', stock_qty: 22, is_featured: 0, primary_image: 'https://picsum.photos/seed/shoe12a/800/800' }
+    ];
+
+    for (const product of products) {
+      await db.collection('products').insertOne({
+        ...product,
+        created_at: new Date()
+      });
+    }
+    console.log('✅ Products seeded');
+
+    // Seed welcome coupon
+    await db.collection('coupons').insertOne({
+      code: 'WELCOME20',
+      discount_type: 'percent',
+      value: 20,
+      min_order: 799,
+      max_uses: 0,
+      used_count: 0,
+      expiry_date: null,
+      created_at: new Date()
+    });
+    console.log('✅ Coupons seeded');
+
+    console.log('✅ Database setup complete!');
+
+  } catch (error) {
+    console.error('❌ Setup error:', error);
+    throw error;
+  }
+}
+
+module.exports = setup;
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       product_id INTEGER NOT NULL,
       size TEXT NOT NULL,

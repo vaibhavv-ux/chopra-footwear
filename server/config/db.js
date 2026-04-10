@@ -1,53 +1,36 @@
-const Database = require('better-sqlite3');
-const path = require('path');
+const { MongoClient } = require('mongodb');
 
-const dbPath = path.join(__dirname, '..', 'chopra.db');
-const sqlite = new Database(dbPath);
+// MongoDB connection
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/chopra-footwear';
+const client = new MongoClient(uri);
 
-// Enable WAL mode for better performance
-sqlite.pragma('journal_mode = WAL');
-sqlite.pragma('foreign_keys = ON');
+let db;
 
-// Wrapper to make SQLite work like mysql2/promise pool interface
-// so all controllers work unchanged
-const db = {
-  query: async (sql, params = []) => {
-    try {
-      // Convert MySQL-style ? placeholders - they work in SQLite too
-      const stmt = sql.trim();
-      
-      // Determine if it's a SELECT/read query
-      const isSelect = /^\s*(SELECT|SHOW|DESCRIBE|EXPLAIN)/i.test(stmt);
-      
-      if (isSelect) {
-        const prepared = sqlite.prepare(stmt);
-        const rows = prepared.all(...(Array.isArray(params) ? params : [params]));
-        return [rows];
-      } else {
-        const prepared = sqlite.prepare(stmt);
-        const result = prepared.run(...(Array.isArray(params) ? params : [params]));
-        return [{ 
-          insertId: result.lastInsertRowid, 
-          affectedRows: result.changes,
-          changedRows: result.changes 
-        }];
-      }
-    } catch (error) {
-      console.error('DB Error:', error.message);
-      console.error('SQL:', sql);
-      console.error('Params:', params);
-      throw error;
-    }
-  },
-  
-  execute: async (sql, params = []) => {
-    return db.query(sql, params);
-  },
+async function connectDB() {
+  try {
+    await client.connect();
+    db = client.db('chopra-footwear');
+    console.log('✅ MongoDB connected successfully');
+    return db;
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error);
+    throw error;
+  }
+}
 
-  getConnection: async () => {
-    return {
-      release: () => {},
-      query: db.query,
+// Get database instance
+const getDB = () => {
+  if (!db) {
+    throw new Error('Database not connected. Call connectDB() first.');
+  }
+  return db;
+};
+
+module.exports = {
+  connectDB,
+  getDB,
+  client
+};
     };
   }
 };

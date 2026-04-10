@@ -5,11 +5,17 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 require('dotenv').config();
 
-// Auto-setup database (creates tables + seeds data on first run)
+// Connect to MongoDB and setup database
+const { connectDB } = require('./config/db');
 const setup = require('./setup');
-setup();
 
-const app = express();
+async function startServer() {
+  try {
+    // Connect to database and run setup
+    await connectDB();
+    await setup();
+
+    const app = express();
 
 // Middleware
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
@@ -63,3 +69,11 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Chopra Footwear Industries API running on port ${PORT}`);
 });
+
+} catch (error) {
+  console.error('Failed to start server:', error);
+  process.exit(1);
+}
+}
+
+startServer();
